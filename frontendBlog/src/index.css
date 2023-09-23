@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    .container {
+        @apply px-8 md:px-14 lg:px-20
+    }
+}
+
+body {
+    background-color: #f9f9f9;
+}
+div > a.active {
+    font-weight: bold;
+}
+/* card swiper  */
+
+.overlay::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.547);;
+    width: 100%;
+    height: 250px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 111;
+}
