@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import Protofillo from './pages/Protofillo';
 import CreatePost from './pages/CreatePost';
 import Footer from './components/footer';
+import { SimpleRegistrationForm } from './pages/Login';
+import Register from './pages/Register';
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/protofillo' element={<Protofillo />} />
         <Route path='/create' element={<CreatePost />} />
+        <Route path='/login' element={<SimpleRegistrationForm />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
       <Footer />
     </>

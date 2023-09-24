@@ -7,9 +7,22 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom'
+import { axiosApi } from "../api/axiosApi.api";
+import Cookie from 'cookie-universal'
 
 export function ProfileMenu() {
+    const cookie = Cookie()
     const Navigate = useNavigate()
+    const handleSignOut = async () => {
+      try {
+        const response = await axiosApi.post('/users/logout');
+        console.log(response);
+        cookie.remove('token');
+        cookie.remove('token');
+      } catch (error) {
+        console.log(error);
+      }
+  }
   return (
     <Menu>
       <MenuHandler>
@@ -37,7 +50,7 @@ export function ProfileMenu() {
             />
           </svg>
             <Typography variant="small" className="font-normal">
-              Protofillo
+              Protofillo for eddit 
             </Typography>
         </MenuItem>
         <MenuItem className="flex items-center gap-2" onClick={() => Navigate('create')}>
@@ -94,7 +107,7 @@ export function ProfileMenu() {
               d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
             />
           </svg>
-          <Typography variant="small" className="font-normal">
+          <Typography variant="small" className="font-normal" onClick={handleSignOut}>
             Sign Out
           </Typography>
         </MenuItem>

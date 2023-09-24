@@ -36,7 +36,7 @@ router.route('/')
                 .get(getPosts);
 
 router.route('/')
-                .post(cookieJWTAuth, upload.single('image'), addPost)
+                .post(verifyToken, upload.single('image'), addPost)
 
 
 module.exports = router;

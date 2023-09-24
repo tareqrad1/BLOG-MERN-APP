@@ -1,6 +1,7 @@
 const express = require('express');
-const { getAllUsers, registerUsers, getUser, loginUsers } = require('../controller/users.controller');
+const { getAllUsers, registerUsers, getUser, loginUsers, logoutUsers } = require('../controller/users.controller');
 const cookieJWTAuth = require('../middleware/cookieJWTAuth');
+const verifyToken = require('../middleware/verifyToken');
 
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.route('/register')
 
 router.route('/login')
                         .post(loginUsers)
+
+router.route('/logout')
+                        .post(logoutUsers)
 
 
 module.exports = router;

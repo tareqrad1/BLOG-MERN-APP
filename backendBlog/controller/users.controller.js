@@ -29,7 +29,7 @@ const registerUsers = async(req, res) => {
         }
         const { firstName, lastName, email, password, confirmPassword } = req.body;
         const user = await User.findOne({ email: email});
-        if(user) return res.status(400).json({ status: 'fail', message: 'User already exists'});
+        if(user) return res.status(400).json({ status: 'fail', error: 'User already exists'});
         const hashPassword = await bcrypt.hash(password, 10);
         const hashConfirmPassword = await bcrypt.hash(confirmPassword, 10);
         const newUser = new User({
@@ -48,7 +48,6 @@ const registerUsers = async(req, res) => {
 
 const loginUsers = async (req, res) => {
     const { email, password } = req.body;
-    const cookie = req.cookies
     if(!email || !password) return res.status(400).json({ status: 'fail', message: 'Please provide email and password' });
     const user = await User.findOne({ email: email });
     if(!user) return res.status(400).json({ status: 'fail', message: 'Invalid email or password' });
@@ -61,15 +60,26 @@ const loginUsers = async (req, res) => {
         sameSite: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, 
     });
-    console.log(req.cookies.jwt);
     if(user && hashPassword) return res.status(200).json({ status: 'success', data: { token: accessToken, user: user } });
     else if(!hashPassword) return res.status(400).json({ status: 'fail', message: 'Invalid email or password'});
     else return res.status(500).json({ status: 'fail', message: 'Internal server error'});
+}
+
+const logoutUsers = async (req, res) => {
+    const cookies = req.cookies;
+    if(!cookies?.jwt) return res.status(501).send();
+    res.clearCookie('jwt', {
+        secure: true,
+        httpOnly: true,
+        sameSite: "None",
+    })
+    res.status(200).json({ status: 'success', message: 'logout successfully' });
 }
 
 module.exports = {
     getAllUsers,
     getUser,
     registerUsers,
-    loginUsers
+    loginUsers,
+    logoutUsers
 }

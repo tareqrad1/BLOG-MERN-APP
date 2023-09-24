@@ -9,7 +9,10 @@ const verifyToken = async (req, res, next) => {
         next();
     }
     catch (error) {
-        res.status(401).json({ error: error.message });
+        res.clearCookie("jwt");
+        // res.status(401).json({ error: error.message });
+        console.log('errorCatch', error);
+        return res.redirect("/");
     }
 }
 
